@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript"></script>
+
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        canvas {
+            background: #eee;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #myCanvas {
+            background-image: url(asset/bg.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        #rectCanvas {
+            z-index: 2;
+            position: relative;
+            background-color: white;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <canvas id="myCanvas" class="col-md-12 col-xs-12" width="1280" height="720"></canvas>
+        </div>
+        <div class="row">
+            <canvas id="rectCanvas" class="col-md-12 col-xs-12" width="1280" height="180"></canvas>
+        </div>
+        <div class="row">
+            <video id="myVideo" class="col-md-6 col-xs-6" controls>
+                <source src=asset/video.mp4 type=video/mp4>
+            </video>
+        </div>
+    </div>
+
+    <script>
+
+        var v = document.getElementById("myVideo");
+
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        var rectCanvas = document.getElementById("rectCanvas");
+        var rtx = rectCanvas.getContext("2d");
+
+        canvas.addEventListener("mousedown", onMouseDown);
+
+        var x = canvas.width;
+        var y = canvas.height;
+
+        var userX = 0;
+        var userY = 0;
+        var start = { status: 0, name: "   start" };
+        var btnX = canvas.width / 2;
+        var btnY = canvas.height / 2;
+        var btnWidth = 200;
+        var btnHeight = 100;
+
+        var squX = 0;
+        var squY = 0;
+        var squWidth = rectCanvas.width;
+        var squHeight = rectCanvas.height;
+        var cornerRadius = 10;
+        var step = true;
+
+        var img1 = new Image();
+        img1.src = 'asset/Iris.png';
+
+        var img2 = new Image();
+        img2.src = 'asset/Lora.png';
+
+        var option = [];
+        for (var c = 0; c < 5; c++) {
+            option[c] = [];
+            for (var r = 0; r < 4; r++) {
+                option[c][r] = { };
+            }
+        }
+        option[0][0] = { status: -1, name: "popcorn"};
+        option[0][1] = { status: -1, name: "stamps" };
+        option[0][2] = { status: -2, name: "prizes" };
+        option[0][3] = { status: -1, name: "careers" };
+
+
+        var check = "start";
+
+        document.getElementById("rectCanvas").style.top = "-" + (canvas.height / 4) + "px";
+
+        // Mouse event handlers
+        function onMouseDown(e) {
+            // Get the mouse position
+            var pos = getMousePos(canvas, e);
+            userX = pos.x;
+            userY = pos.y;
+        }
+
+        // Get the mouse position
+        function getMousePos(canvas, e) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: Math.round((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width),
+                y: Math.round((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height)
+            };
+        }
+
+        function drawScore() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("x: " + x, 20, 20);
+            ctx.fillText("y: " + y, 20, 40);
+            ctx.fillText("mx: " + userX, 20, 60);
+            ctx.fillText("my: " + userY, 20, 80);
+            ctx.fillText("check: " + check, 20, 100);
+            ctx.fillText("status: " + start.status, 20, 120);
+        }
+
+        function drawSquare(x, y, w, h, ob) {
+
+            rtx.beginPath();
+            rtx.rect(x, y, w, h);
+            rtx.fillStyle = "#FFFFFF";
+            rtx.fill();
+            rtx.closePath();
+
+            rtx.lineJoin = "round";
+            rtx.lineWidth = cornerRadius;
+            rtx.strokeRect(x + (cornerRadius / 2), y + (cornerRadius / 2), w - cornerRadius, h - cornerRadius);
+        }
+
+        function drawBtn(x, y, w, h, ob) {
+
+            var fixX = x - w / 2;
+            var fixY = y - h / 2;
+
+            ctx.beginPath();
+            ctx.rect(fixX, fixY, w, h);
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.lineJoin = "round";
+            ctx.lineWidth = cornerRadius;
+            ctx.stroke();
+
+            
+            drawStart(ob.name, fixX, fixY+5);
+      
+            if (userX > fixX && userY > fixY && userX < fixX + w && userY < fixY + h) {
+                if (ob.status == 0) {
+                    check = "click";
+                    ob.status = 1;
+                }
+                if (ob.status == -1) {
+                    check = "no";
+                }
+                if (ob.status == -2) {
+                    check = "yes";
+                }
+            }
+        }
+
+        function drawStart(text, x, y, ob) {
+            ctx.font = "36px 微軟正黑體";
+            ctx.fillStyle = "black";
+            ctx.fillText(text, x + 35, y + 55);
+        }
+
+        function drawText(text, x, y, ob) {
+            rtx.font = "36px 微軟正黑體";
+            rtx.fillStyle = "black";
+            rtx.fillText(text, x + 35, y + 55);
+        }
+
+        function main() {
+            if (start.status == 0) {
+                drawBtn(btnX, btnY, btnWidth, btnHeight, start);
+            }
+
+            if (start.status >= 1) {
+                drawSquare(squX, squY, squWidth, squHeight, start);
+                document.getElementById("rectCanvas").style.opacity = "1";
+
+                if (start.status >= 3) {
+
+                    ctx.drawImage(img1, 0, 0);
+                }
+
+                if (start.status >= 4) {
+
+                    ctx.drawImage(img2, canvas.width - 600, 0);
+                }
+
+                if (start.status >= 2 && start.status < 5) {
+                    drawText("故事背景 : ", squX, squY, start);
+                }
+
+                if (start.status == 3) {
+                    drawText("艾莉詩電競比賽輸了，覺得自己一無是處。", squX, squY + 70, start);
+                }
+
+                else if (start.status == 4) {
+                    drawText("因此蘿拉以她很會做糕點安慰她，並勸其多看生命正向的部分。", squX, squY + 70, start);
+                }
+
+                if (start.status >= 5) {
+                    drawText("Iris: ", squX, squY, start);
+                }
+
+                if (start.status >= 5) {
+                    drawText("Today is not my day, I didn't win any ____ on my E-sports competition.", squX, squY + 70, start);
+                }
+
+                if (start.status == 6) {
+                    step = false;
+                    drawBtn(btnX, 80, btnWidth, btnHeight, option[0][0]);
+                    drawBtn(btnX, 200, btnWidth, btnHeight, option[0][1]);
+                    drawBtn(btnX, 320, btnWidth, btnHeight, option[0][2]);
+                    drawBtn(btnX, 440, btnWidth, btnHeight, option[0][3]);
+                }
+
+                if (userX != 0 && step) {
+                    start.status += 1;
+                }
+            }
+
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("rectCanvas").style.top = "-" + (canvas.height / 4) + "px";
+            drawScore();
+
+            main();
+
+            userX = 0;
+            userY = 0;
+        }
+        draw();
+        setInterval(draw, 50);
+    </script>
+
+</body>
+</html>
