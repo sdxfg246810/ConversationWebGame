@@ -36,13 +36,14 @@
 <body>
     <div class="container">
         <div class="row">
-            <canvas id="myCanvas" class="col-md-12 col-xs-12" width="1280" height="720"></canvas>
-        </div>
-        <div class="row">
-            <video id="myVideo" class="col-md-6 col-xs-6" controls>
+            <video id="myVideo" class="col-md-12 col-xs-12" controls>
                 <source src=asset/video.mp4 type=video/mp4>
             </video>
         </div>
+        <div class="row">
+            <canvas id="myCanvas" class="col-md-12 col-xs-12" width="1280" height="720"></canvas>
+        </div>
+
     </div>
 
     <script>
@@ -121,8 +122,6 @@
 
         var check = "start";
 
-        //document.getElementById("rectCanvas").style.top = "-" + (canvas.height / 4) + "px";
-
         // Mouse event handlers
         function onMouseDown(e) {
             // Get the mouse position
@@ -141,14 +140,15 @@
         }
 
         function drawScore() {
-            ctx.font = "16px Arial";
+            ctx.font = "64px Arial";
             ctx.fillStyle = "black";
-            ctx.fillText("x: " + x, 20, 20);
-            ctx.fillText("y: " + y, 20, 40);
-            ctx.fillText("mx: " + userX, 20, 60);
-            ctx.fillText("my: " + userY, 20, 80);
-            ctx.fillText("check: " + check, 20, 100);
-            ctx.fillText("status: " + start.status, 20, 120);
+            //ctx.fillText("x: " + x, 20, 20);
+            //ctx.fillText("y: " + y, 20, 40);
+            //ctx.fillText("mx: " + userX, 20, 60);
+            //ctx.fillText("my: " + userY, 20, 80);
+            if(check == "no")
+            ctx.fillText(check, 20, 160);
+            //ctx.fillText("status: " + start.status, 20, 120);
         }
 
         function drawSquare(x, y, w, h, ob) {
@@ -211,21 +211,42 @@
                 }
             }
         }
-
         function drawImg() {
             if (start.status >= 3) {
-
                 ctx.drawImage(img1, 0, 0);
             }
-
             if (start.status >= 4) {
-
                 ctx.drawImage(img2, canvas.width - 600, 0);
             }
+        }
+        function changeImg(name, face) {
 
-            if (start.status >= 5 && start.status < 18) {
-                img1.src = 'asset/Iris_cry.png';
+            if (name == "Iris") {
+                switch (face) {
+                    case "normal":
+                        img1.src = 'asset/Iris.png';
+                        break;
+                    case "cry":
+                        img1.src = 'asset/Iris_cry.png';
+                        break;
+                    case "surprice":
+                        img1.src = 'asset/Iris_surprice';
+                        break;
+                    case "laught":
+                        img1.src = 'asset/Iris_laught';
+                        break;
+                }
             }
+            if (name == "Lora") {
+                switch (face) {
+                    case "normal":
+                        img2.src = 'asset/Lora.png';
+                        break;
+                    case "laught":
+                        img2.src = 'asset/Lora_laught';
+                        break;
+                }
+            }            
         }
 
         function main() {
@@ -243,6 +264,7 @@
 
                 if (start.status == 3) {
                     drawText("艾莉詩電競比賽輸了，覺得自己一無是處。", squX, squY + 70, start);
+                    
                 }
 
                 else if (start.status == 4) {
@@ -255,6 +277,8 @@
 
                 if (start.status >= 5 && start.status < 7) {
                     drawText("Today is not my day, I didn't win any ____ on my E-sports competition.", squX, squY + 70, start);
+                    changeImg("Iris","cry");
+                    //img1.src = 'asset/Iris_cry.png';
                 }
 
                 if (start.status == 6) {
@@ -327,6 +351,8 @@
 
                 if (start.status >= 18 && start.status < 20) {
                     drawText("Really? Maybe I should cheer up and _____. ", squX, squY + 70, start);
+                    changeImg("Iris", "surprice");
+                    //img1.src = 'asset/Iris_surprice.png';
                 }
 
                 if (start.status == 19) {
@@ -371,6 +397,7 @@
 
                 if (start.status == 25) {
                     drawText("Oh, it's really my pleasure! Thank you. I become relieved.", squX, squY + 70, start);
+                    img1.src = 'asset/Iris_laught.png';
                 }
 
                 if (start.status >= 26 && start.status < 29) {
@@ -396,24 +423,27 @@
                 if (start.status >= 29) {
                     drawText("End.", squX, squY, start);
                 }
-
-                if (check == "yes") {
-                    check = "click";
-                    step = true;
-                }
-
-                if (userX != 0 && step) {
-                    start.status += 1;
-                }
             }
-
         }
         
+        function control() {
+            if (check == "yes") {
+                check = "click";
+                step = true;
+            }
+
+            if (userX != 0 && step) {
+                start.status += 1;
+            }
+        }
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawImg();
-            main();
+            changeImg();
             drawReturn();
+            main();
+            control();
+
             drawScore();
             userX = 0;
             userY = 0;
