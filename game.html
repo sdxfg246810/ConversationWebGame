@@ -203,11 +203,11 @@
         }
 
         function drawReturn() {
-            if (start.status > 1) {
+            if (start.status > 2 && step) {
 
-                ctx.drawImage(imgReturn, 0, 0);
+                ctx.drawImage(imgReturn, 0, 0, 100, 100);
                 if (userX > 0 && userY > 0 && userX < imgReturn.width && userY < imgReturn.height) {
-                    check = "return";
+                    start.status -= 2;
                 }
             }
         }
@@ -221,6 +221,10 @@
             if (start.status >= 4) {
 
                 ctx.drawImage(img2, canvas.width - 600, 0);
+            }
+
+            if (start.status >= 5 && start.status < 18) {
+                img1.src = 'asset/Iris_cry.png';
             }
         }
 
