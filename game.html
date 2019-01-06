@@ -67,9 +67,9 @@
         var btnHeight = 100;
 
         var squX = 0;
-        var squY = x*2/5;
+        var squY = x * 2 / 5;
         var squWidth = x;
-        var squHeight = y/4;
+        var squHeight = y / 4;
 
         var cornerRadius = 10;
         var step = true;
@@ -81,16 +81,65 @@
         img2.src = 'asset/Lora.png';
 
         var imgReturn = new Image();
-        imgReturn.src = 'asset/return.png'
+        imgReturn.src = 'asset/return.png';
+
+        var myAudio_Iris_1 = new Audio();
+        myAudio_Iris_1.src = 'asset/Iris_1.aac';
+
+        var myAudio_Iris_2 = new Audio();
+        myAudio_Iris_2.src = 'asset/Iris_2.aac';
+
+        var myAudio_Iris_3 = new Audio();
+        myAudio_Iris_3.src = 'asset/Iris_3.aac';
+
+        var myAudio_Iris_4 = new Audio();
+        myAudio_Iris_4.src = 'asset/Iris_4.aac';
+
+        var myAudio_Lora_2_1 = new Audio();
+        myAudio_Lora_2_1.src = 'asset/Lora_2_1.aac';
+
+        var myAudio_Lora_2_2 = new Audio();
+        myAudio_Lora_2_2.src = 'asset/Lora_2_2.aac';
+
+        var myAudio_Lora_2_3 = new Audio();
+        myAudio_Lora_2_3.src = 'asset/Lora_2_3.aac';
+
+        var myAudio_Lora_3_1 = new Audio();
+        myAudio_Lora_3_1.src = 'asset/Lora_3_1.aac';
+
+        var myAudio_Lora_3_2 = new Audio();
+        myAudio_Lora_3_2.src = 'asset/Lora_3_2.aac';
+
+        var myAudio_Lora_4_1 = new Audio();
+        myAudio_Lora_4_1.src = 'asset/Lora_4_1.aac';
+
+        var myAudio_q1 = new Audio();
+        myAudio_q1.src = 'asset/q1.aac';
+
+        var myAudio_q2 = new Audio();
+        myAudio_q2.src = 'asset/q2.aac';
+
+        var myAudio_q3 = new Audio();
+        myAudio_q3.src = 'asset/q3.aac';
+
+        var myAudio_q4 = new Audio();
+        myAudio_q4.src = 'asset/q4.aac';
+
+        var myAudio_q5 = new Audio();
+        myAudio_q5.src = 'asset/q5.aac';
+
+        var myAudio_q6 = new Audio();
+        myAudio_q6.src = 'asset/q6.aac';
+
 
         var option = [];
         for (var c = 0; c < 6; c++) {
             option[c] = [];
             for (var r = 0; r < 4; r++) {
-                option[c][r] = { };
+                option[c][r] = {};
             }
         }
-        option[0][0] = { status: -1, name: "popcorn"};
+        option[0][0] = { status: -1, name: "popcorn" };
         option[0][1] = { status: -1, name: "stamps" };
         option[0][2] = { status: -2, name: "prizes" };
         option[0][3] = { status: -1, name: "careers" };
@@ -104,7 +153,7 @@
         option[2][1] = { status: -2, name: "neither could" };
         option[2][2] = { status: -1, name: "either couldn't" };
         option[2][3] = { status: -1, name: "so couldn't" };
-        
+
         option[3][0] = { status: -1, name: "always forget about my worries" };
         option[3][1] = { status: -1, name: "eat a good pumpkin pie now" };
         option[3][2] = { status: -1, name: "be a rich businesswoman" };
@@ -114,7 +163,7 @@
         option[4][1] = { status: -1, name: "fried" };
         option[4][2] = { status: -2, name: "baked" };
         option[4][3] = { status: -1, name: "cooked" };
-        
+
         option[5][0] = { status: -2, name: "so can I" };
         option[5][1] = { status: -1, name: "also can I" };
         option[5][2] = { status: -1, name: "also am I" };
@@ -140,15 +189,14 @@
         }
 
         function drawScore() {
-            ctx.font = "64px Arial";
+            ctx.font = "16px Arial";
             ctx.fillStyle = "black";
-            //ctx.fillText("x: " + x, 20, 20);
-            //ctx.fillText("y: " + y, 20, 40);
-            //ctx.fillText("mx: " + userX, 20, 60);
-            //ctx.fillText("my: " + userY, 20, 80);
-            if(check == "no")
-            ctx.fillText(check, 20, 160);
-            //ctx.fillText("status: " + start.status, 20, 120);
+            ctx.fillText("x: " + x, 20, 220);
+            ctx.fillText("y: " + y, 20, 240);
+            ctx.fillText("mx: " + userX, 20, 260);
+            ctx.fillText("my: " + userY, 20, 280);
+            ctx.fillText(check, 20, 360);
+            ctx.fillText("status: " + start.status, 20, 320);
         }
 
         function drawSquare(x, y, w, h, ob) {
@@ -179,9 +227,9 @@
             ctx.lineWidth = cornerRadius;
             ctx.stroke();
 
-            
-            drawText(ob.name, fixX, fixY+5);
-      
+
+            drawText(ob.name, fixX, fixY + 5);
+
             if (userX > fixX && userY > fixY && userX < fixX + w && userY < fixY + h) {
                 if (ob.status == 0) {
                     check = "click";
@@ -191,7 +239,8 @@
                     check = "no";
                 }
                 if (ob.status == -2) {
-                    check = "yes";
+                    check = "click";
+                    step = true;
                 }
             }
         }
@@ -202,15 +251,6 @@
             ctx.fillText(text, x + 35, y + 55);
         }
 
-        function drawReturn() {
-            if (start.status > 2 && step) {
-
-                ctx.drawImage(imgReturn, 0, 0, 100, 100);
-                if (userX > 0 && userY > 0 && userX < imgReturn.width && userY < imgReturn.height) {
-                    start.status -= 2;
-                }
-            }
-        }
         function drawImg() {
             if (start.status >= 3) {
                 ctx.drawImage(img1, 0, 0);
@@ -246,7 +286,7 @@
                         img2.src = 'asset/Lora_laught.png';
                         break;
                 }
-            }            
+            }
         }
 
         function main() {
@@ -254,17 +294,17 @@
                 drawBtn(btnX, btnY, btnWidth, btnHeight, start);
             }
             if (start.status >= 1) {
-                
+
                 drawSquare(squX, squY, squWidth, squHeight, start);
 
                 if (start.status >= 2 && start.status < 5) {
-                    
+
                     drawText("故事背景 : ", squX, squY, start);
                 }
 
                 if (start.status == 3) {
                     drawText("艾莉詩電競比賽輸了，覺得自己一無是處。", squX, squY + 70, start);
-                    
+
                 }
 
                 else if (start.status == 4) {
@@ -277,8 +317,7 @@
 
                 if (start.status >= 5 && start.status < 7) {
                     drawText("Today is not my day, I didn't win any ____ on my E-sports competition.", squX, squY + 70, start);
-                    changeImg("Iris","cry");
-                    //img1.src = 'asset/Iris_cry.png';
+                    changeImg("Iris", "cry");             
                 }
 
                 if (start.status == 6) {
@@ -290,13 +329,13 @@
                 }
 
                 if (start.status == 7) {
-                    drawText("Today is not my day, I didn't win any " + option[0][2].name+" on my E-sports competition.", squX, squY + 70, start);
+                    drawText("Today is not my day, I didn't win any " + option[0][2].name + " on my E-sports competition.", squX, squY + 70, start);
                 }
 
                 if (start.status == 8) {
                     drawText("See, I' m poor at everything. I just can't do anything right.", squX, squY + 70, start);
                 }
-                
+
                 if (start.status >= 9 && start.status < 18) {
                     drawText("Lora: ", squX, squY, start);
                 }
@@ -328,7 +367,7 @@
                 if (start.status >= 14 && start.status < 16) {
                     drawText("Everyone couldn't stop eating it,and ______ Jeff(a person that Iris love).", squX, squY + 70, start);
                 }
-                
+
                 if (start.status == 15) {
                     step = false;
                     drawBtn(btnX, 80, btnWidth + 150, btnHeight, option[2][0]);
@@ -342,7 +381,7 @@
                 }
 
                 if (start.status == 17) {
-                    drawText("and "+option[2][1].name+" Jeff ( a person that Iris love ).", squX, squY + 70, start);
+                    drawText("and " + option[2][1].name + " Jeff ( a person that Iris love ).", squX, squY + 70, start);
                 }
 
                 if (start.status >= 18 && start.status < 21) {
@@ -364,11 +403,11 @@
                 }
 
                 if (start.status == 20) {
-                    drawText("Really? Maybe I should cheer up and " + option[3][3].name+". ", squX, squY + 70, start);
+                    drawText("Really? Maybe I should cheer up and " + option[3][3].name + ". ", squX, squY + 70, start);
                 }
 
                 if (start.status >= 21 && start.status < 25) {
-                    drawText("Lora: ", squX, squY , start);
+                    drawText("Lora: ", squX, squY, start);
                 }
 
                 if (start.status == 21) {
@@ -388,7 +427,7 @@
                 }
 
                 if (start.status == 24) {
-                    drawText("also loved the cake you " + option[4][2].name+" in Teacher's Day? ", squX, squY + 70, start);
+                    drawText("also loved the cake you " + option[4][2].name + " in Teacher's Day? ", squX, squY + 70, start);
                 }
 
                 if (start.status >= 25 && start.status < 26) {
@@ -417,7 +456,7 @@
                 }
 
                 if (start.status == 28) {
-                    drawText(" Seeing you in this way, and " + option[5][0].name+" feel much better now.", squX, squY + 70, start);
+                    drawText(" Seeing you in this way, and " + option[5][0].name + " feel much better now.", squX, squY + 70, start);
                 }
 
                 if (start.status >= 29) {
@@ -425,23 +464,44 @@
                 }
             }
         }
-        
+
+        function soundControl(status) {
+            if (status == 5) {
+                myAudio_Iris_1.play();
+            }
+            else if (status != 5) {
+                myAudio_Iris_1.currentTime = 0;
+                myAudio_Iris_1.pause();
+            }
+        }
+
         function control() {
-            if (check == "yes") {
-                check = "click";
-                step = true;
+            if (start.status > 2 && step) {
+                ctx.drawImage(imgReturn, 0, 0, 100, 100);
+                if (userX > 0 && userY > 0 && userX < imgReturn.width && userY < imgReturn.height) {
+                    start.status -= 1;
+                }
             }
 
             if (userX != 0 && step) {
-                start.status += 1;
+                if (userX > 0 && userY > 0 && userX < imgReturn.width && userY < imgReturn.height) {
+
+                }
+                else {
+                    start.status += 1;
+                }
+                
             }
         }
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawScore;
             drawImg();
             changeImg();
-            drawReturn();
+
             main();
+            soundControl();
             control();
 
             drawScore();
