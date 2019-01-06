@@ -95,6 +95,9 @@
         var myAudio_Iris_4 = new Audio();
         myAudio_Iris_4.src = 'asset/Iris_4.aac';
 
+        var myAudio_Iris_5 = new Audio();
+        myAudio_Iris_5.src = 'asset/Iris_5.aac';
+
         var myAudio_Lora_2_1 = new Audio();
         myAudio_Lora_2_1.src = 'asset/Lora_2_1.aac';
 
@@ -109,9 +112,6 @@
 
         var myAudio_Lora_3_2 = new Audio();
         myAudio_Lora_3_2.src = 'asset/Lora_3_2.aac';
-
-        var myAudio_Lora_4_1 = new Audio();
-        myAudio_Lora_4_1.src = 'asset/Lora_4_1.aac';
 
         var myAudio_q1 = new Audio();
         myAudio_q1.src = 'asset/q1.aac';
@@ -130,6 +130,11 @@
 
         var myAudio_q6 = new Audio();
         myAudio_q6.src = 'asset/q6.aac';
+
+        var reply = [];
+        for (var c = 0; c < 16; c++) {
+            reply[c] = 0;
+        }
 
 
         var option = [];
@@ -465,20 +470,174 @@
             }
         }
 
-        function soundControl(status) {
-            if (status == 5) {
+        function soundControl() {           
+            if (start.status == 5 && reply[0] == 0) {
                 myAudio_Iris_1.play();
+                reply[0] = 1;
             }
-            else if (status != 5) {
+            else if (start.status != 5 && reply[0] == 1) { 
                 myAudio_Iris_1.currentTime = 0;
                 myAudio_Iris_1.pause();
+                reply[0] = 0;
             }
+
+            if (start.status == 6 && reply[1] == 0) {
+                myAudio_q1.play();
+                reply[1] = 1;
+            }
+            else if (start.status != 6 && reply[1] == 1) {
+                myAudio_q1.currentTime = 0;
+                myAudio_q1.pause();
+                reply[1] = 0;
+            }
+
+            if (start.status == 8 && reply[2] == 0) {
+                myAudio_Iris_2.play();
+                reply[2] = 1;
+            }
+            else if (start.status != 8 && reply[2] == 1) {
+                myAudio_Iris_2.currentTime = 0;
+                myAudio_Iris_2.pause();
+                reply[2] = 0;
+            }
+
+            if (start.status == 10 && reply[3] == 0) {
+                myAudio_q2.play();
+                reply[3] = 1;
+            }
+            else if (start.status != 10 && reply[3] == 1) {
+                myAudio_q2.currentTime = 0;
+                myAudio_q2.pause();
+                reply[3] = 0;
+            }
+
+            if (start.status == 12 && reply[4] == 0) {
+                myAudio_Lora_2_1.play();
+                reply[4] = 1;
+            }
+            else if (start.status != 12 && reply[4] == 1) {
+                myAudio_Lora_2_1.currentTime = 0;
+                myAudio_Lora_2_1.pause();
+                reply[4] = 0;
+            }
+
+            if (start.status == 13 && reply[5] == 0) {
+                myAudio_Lora_2_2.play();
+                reply[5] = 1;
+            }
+            else if (start.status != 13 && reply[5] == 1) {
+                myAudio_Lora_2_2.currentTime = 0;
+                myAudio_Lora_2_2.pause();
+                reply[5] = 0;
+            }
+
+            if (start.status == 14 && reply[6] == 0) {
+                myAudio_Lora_2_3.play();
+                reply[6] = 1;
+            }
+            else if (start.status != 14 && reply[6] == 1) {
+                myAudio_Lora_2_3.currentTime = 0;
+                myAudio_Lora_2_3.pause();
+                reply[6] = 0;
+            }
+
+            if (start.status == 15 && reply[7] == 0) {
+                myAudio_q3.play();
+                reply[7] = 1;
+            }
+            else if (start.status != 15 && reply[7] == 1) {
+                myAudio_q3.currentTime = 0;
+                myAudio_q3.pause();
+                reply[7] = 0;
+            }
+
+            if (start.status == 18 && reply[8] == 0) {
+                myAudio_Iris_3.play();
+                reply[8] = 1;
+            }
+            else if (start.status != 18 && reply[8] == 1) {
+                myAudio_Iris_3.currentTime = 0;
+                myAudio_Iris_3.pause();
+                reply[8] = 0;
+            }
+
+            if (start.status == 19 && reply[9] == 0) {
+                myAudio_q4.play();
+                reply[9] = 1;
+            }
+            else if (start.status != 19 && reply[9] == 1) {
+                myAudio_q4.currentTime = 0;
+                myAudio_q4.pause();
+                reply[9] = 0;
+            }
+
+            if (start.status == 21 && reply[10] == 0) {
+                myAudio_Lora_3_1.play();
+                reply[10] = 1;
+            }
+            else if (start.status != 21 && reply[10] == 1) {
+                myAudio_Lora_3_1.currentTime = 0;
+                myAudio_Lora_3_1.pause();
+                reply[10] = 0;
+            }
+
+            if (start.status == 22 && reply[11] == 0) {
+                myAudio_Lora_3_2.play();
+                reply[11] = 1;
+            }
+            else if (start.status != 22 && reply[11] == 1) {
+                myAudio_Lora_3_2.currentTime = 0;
+                myAudio_Lora_3_2.pause();
+                reply[11] = 0;
+            }
+
+            if (start.status == 23 && reply[12] == 0) {
+                myAudio_q5.play();
+                reply[12] = 1;
+            }
+            else if (start.status != 23 && reply[12] == 1) {
+                myAudio_q5.currentTime = 0;
+                myAudio_q5.pause();
+                reply[12] = 0;
+            }
+
+            if (start.status == 25 && reply[13] == 0) {
+                myAudio_Iris_4.play();
+                reply[13] = 1;
+            }
+            else if (start.status != 25 && reply[13] == 1) {
+                myAudio_Iris_4.currentTime = 0;
+                myAudio_Iris_4.pause();
+                reply[13] = 0;
+            }
+
+            if (start.status == 26 && reply[14] == 0) {
+                myAudio_Iris_5.play();
+                reply[14] = 1;
+            }
+            else if (start.status != 26 && reply[14] == 1) {
+                myAudio_Iris_5.currentTime = 0;
+                myAudio_Iris_5.pause();
+                reply[14] = 0;
+            }
+
+            if (start.status == 27 && reply[15] == 0) {
+                myAudio_q6.play();
+                reply[15] = 1;
+            }
+            else if (start.status != 27 && reply[15] == 1) {
+                myAudio_q6.currentTime = 0;
+                myAudio_q6.pause();
+                reply[15] = 0;
+            }
+
         }
 
         function control() {
-            if (start.status > 2 && step) {
+            if (start.status > 2) {
                 ctx.drawImage(imgReturn, 0, 0, 100, 100);
                 if (userX > 0 && userY > 0 && userX < imgReturn.width && userY < imgReturn.height) {
+                    step = true;
                     start.status -= 1;
                 }
             }
