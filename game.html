@@ -74,6 +74,14 @@
         var cornerRadius = 10;
         var step = true;
 
+        var imgYes = new Image();
+        imgYes.src = 'asset/yes.jpg';
+
+        var imgNo = new Image();
+        imgNo.src = 'asset/no.jpg';
+
+        var answer = "";
+
         var img1 = new Image();
         img1.src = 'asset/Iris.png';
 
@@ -241,10 +249,10 @@
                     ob.status = 1;
                 }
                 if (ob.status == -1) {
-                    check = "no";
+                    answer = "no";
                 }
                 if (ob.status == -2) {
-                    check = "click";
+                    answer = "yes";
                     step = true;
                 }
             }
@@ -294,6 +302,27 @@
             }
         }
 
+        var time = true;
+        function yesno(result) {
+            if (result == "yes") {
+                ctx.drawImage(imgYes, btnX - imgYes.width / 2, btnY - imgYes.height);
+                if (time) {
+                    setTimeout("answer = ''", 1000);
+                    setTimeout("time = true", 1000);
+                    time = false;
+                }
+                console.log("r");
+            }
+
+            if (result == "no") {
+                ctx.drawImage(imgNo, btnX - imgNo.width / 2, btnY - imgNo.height);
+                if (time) {
+                    setTimeout("answer = ''", 1000);
+                    setTimeout("time = true", 1000);
+                    time = false;
+                }
+            }
+        }
         function main() {
             if (start.status == 0) {
                 drawBtn(btnX, btnY, btnWidth, btnHeight, start);
@@ -640,6 +669,7 @@
                     step = true;
                     start.status -= 1;
                 }
+
             }
 
             if (userX != 0 && step) {
@@ -664,6 +694,7 @@
             control();
 
             drawScore();
+            yesno(answer);
             userX = 0;
             userY = 0;
         }
