@@ -92,34 +92,34 @@
         imgReturn.src = 'asset/return.png';
 
         var myAudio_Iris_1 = new Audio();
-        myAudio_Iris_1.src = 'asset/Iris_1.aac';
+        myAudio_Iris_1.src = 'asset/001.aac';
 
         var myAudio_Iris_2 = new Audio();
-        myAudio_Iris_2.src = 'asset/Iris_2.aac';
+        myAudio_Iris_2.src = 'asset/003.aac';
 
         var myAudio_Iris_3 = new Audio();
-        myAudio_Iris_3.src = 'asset/Iris_3.aac';
+        myAudio_Iris_3.src = 'asset/007.aac';
 
         var myAudio_Iris_4 = new Audio();
-        myAudio_Iris_4.src = 'asset/Iris_4.aac';
+        myAudio_Iris_4.src = 'asset/011.aac';
 
         var myAudio_Iris_5 = new Audio();
-        myAudio_Iris_5.src = 'asset/Iris_5.aac';
+        myAudio_Iris_5.src = 'asset/012.aac';
 
         var myAudio_Lora_2_1 = new Audio();
-        myAudio_Lora_2_1.src = 'asset/Lora_2_1.aac';
+        myAudio_Lora_2_1.src = 'asset/005-1.aac';
 
         var myAudio_Lora_2_2 = new Audio();
-        myAudio_Lora_2_2.src = 'asset/Lora_2_2.aac';
+        myAudio_Lora_2_2.src = 'asset/005-2.aac';
 
         var myAudio_Lora_2_3 = new Audio();
-        myAudio_Lora_2_3.src = 'asset/Lora_2_3.aac';
+        myAudio_Lora_2_3.src = 'asset/005-3.aac';
 
         var myAudio_Lora_3_1 = new Audio();
-        myAudio_Lora_3_1.src = 'asset/Lora_3_1.aac';
+        myAudio_Lora_3_1.src = 'asset/009-1.aac';
 
         var myAudio_Lora_3_2 = new Audio();
-        myAudio_Lora_3_2.src = 'asset/Lora_3_2.aac';
+        myAudio_Lora_3_2.src = 'asset/009-2.aac';
 
         var myAudio_q1 = new Audio();
         myAudio_q1.src = 'asset/q1.aac';
@@ -138,6 +138,15 @@
 
         var myAudio_q6 = new Audio();
         myAudio_q6.src = 'asset/q6.aac';
+
+        var yesAudio = new Audio();
+        yesAudio.src = 'asset/yes.aac';
+
+        var noAudio = new Audio();
+        noAudio.src = 'asset/no.aac';
+
+        var bgm = new Audio();
+        bgm.src = 'asset/bgm.aac';
 
         var reply = [];
         for (var c = 0; c < 16; c++) {
@@ -309,6 +318,8 @@
                 if (time) {
                     setTimeout("answer = ''", 1000);
                     setTimeout("time = true", 1000);
+                    yesAudio.currentTime = 0;
+                    yesAudio.play();
                     time = false;
                 }
                 console.log("r");
@@ -319,6 +330,8 @@
                 if (time) {
                     setTimeout("answer = ''", 1000);
                     setTimeout("time = true", 1000);
+                    noAudio.currentTime = 0;
+                    noAudio.play();
                     time = false;
                 }
             }
@@ -330,7 +343,7 @@
             if (start.status >= 1) {
 
                 drawSquare(squX, squY, squWidth, squHeight, start);
-
+                bgm.play();
                 if (start.status >= 2 && start.status < 5) {
 
                     drawText("故事背景 : ", squX, squY, start);
@@ -343,6 +356,7 @@
 
                 else if (start.status == 4) {
                     drawText("因此蘿拉以她很會做糕點安慰她，並勸其多看生命正向的部分。", squX, squY + 70, start);
+                    changeImg("Iris", "normal");  
                 }
 
                 if (start.status >= 5 && start.status < 9) {
@@ -396,10 +410,12 @@
 
                 if (start.status == 13) {
                     drawText("for our party last time ?", squX, squY + 70, start);
+                    changeImg("Lora", "normal");    
                 }
 
                 if (start.status >= 14 && start.status < 16) {
-                    drawText("Everyone couldn't stop eating it,and ______ Jeff(a person that Iris love).", squX, squY + 70, start);
+                    drawText("Everyone couldn't stop eating it, and ____ Jeff( a person whom Iris loves ).", squX, squY + 70, start);
+                    changeImg("Lora", "laught");    
                 }
 
                 if (start.status == 15) {
@@ -415,17 +431,17 @@
                 }
 
                 if (start.status == 17) {
-                    drawText("and " + option[2][1].name + " Jeff ( a person that Iris love ).", squX, squY + 70, start);
+                    drawText("and " + option[2][1].name + " Jeff ( a person whom Iris loves ).", squX, squY + 70, start);
+                    changeImg("Iris", "cry");
                 }
 
                 if (start.status >= 18 && start.status < 21) {
-                    drawText("Iris: ", squX, squY, start);
+                    drawText("Iris: ", squX, squY, start);   
                 }
 
                 if (start.status >= 18 && start.status < 20) {
                     drawText("Really? Maybe I should cheer up and _____. ", squX, squY + 70, start);
                     changeImg("Iris", "surprice");
-                    //img1.src = 'asset/Iris_surprice.png';
                 }
 
                 if (start.status == 19) {
@@ -438,6 +454,7 @@
 
                 if (start.status == 20) {
                     drawText("Really? Maybe I should cheer up and " + option[3][3].name + ". ", squX, squY + 70, start);
+                    changeImg("Lora", "laught"); 
                 }
 
                 if (start.status >= 21 && start.status < 25) {
@@ -446,6 +463,7 @@
 
                 if (start.status == 21) {
                     drawText("Trust me! Don't you remember that our teacher ...", squX, squY + 70, start);
+                    changeImg("Lora", "normal");   
                 }
 
                 if (start.status >= 22 && start.status < 24) {
@@ -462,6 +480,7 @@
 
                 if (start.status == 24) {
                     drawText("also loved the cake you " + option[4][2].name + " in Teacher's Day? ", squX, squY + 70, start);
+                    changeImg("Iris", "surprice");
                 }
 
                 if (start.status >= 25 && start.status < 26) {
@@ -470,7 +489,7 @@
 
                 if (start.status == 25) {
                     drawText("Oh, it's really my pleasure! Thank you. I become relieved.", squX, squY + 70, start);
-                    img1.src = 'asset/Iris_laught.png';
+                    changeImg("Iris", "laught");
                 }
 
                 if (start.status >= 26 && start.status < 29) {
@@ -683,8 +702,7 @@
             }
         }
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+            ctx.clearRect(0, 0, canvas.width, canvas.height);            
             drawImg();
             changeImg();
 
